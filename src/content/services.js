@@ -1,6 +1,6 @@
-import {img} from '@/lib/media';
-import {forms} from '@/content/forms';
-import {site} from '@/content/site';
+import { img } from '@/lib/media';
+import { forms } from '@/content/forms';
+import { site } from '@/content/site';
 
 const SERVICE_ICONS = {
     engine: img('/mock/services/icons/engine.png', 'Двигатель'),
@@ -12,26 +12,42 @@ const SERVICE_ICONS = {
 };
 
 const ENGINE_BENEFITS = [
-    {icon: SERVICE_ICONS.engine, text: 'Стабильная работа двигателя'},
-    {icon: SERVICE_ICONS.car, text: 'Экономия топлива'},
-    {icon: SERVICE_ICONS.fire, text: 'Сохранение мощности'},
-    {icon: SERVICE_ICONS.gears, text: 'Увеличение ресурса'},
-    {icon: SERVICE_ICONS.gear, text: 'Безопасность на дороге'},
+    { icon: SERVICE_ICONS.engine, text: 'Стабильная работа двигателя' },
+    { icon: SERVICE_ICONS.car, text: 'Экономия топлива' },
+    { icon: SERVICE_ICONS.fire, text: 'Сохранение мощности' },
+    { icon: SERVICE_ICONS.gears, text: 'Увеличение ресурса' },
+    { icon: SERVICE_ICONS.gear, text: 'Безопасность на дороге' },
+];
+
+const ELECTRO_BENEFITS = [
+    { icon: SERVICE_ICONS.engine, text: 'Стабильную работу электроники' },
+    { icon: SERVICE_ICONS.car, text: 'Отсутствие ошибок' },
+    { icon: SERVICE_ICONS.fire, text: 'Надёжный запуск' },
+    { icon: SERVICE_ICONS.gears, text: 'Защиту от коротких замыканий' },
+    { icon: SERVICE_ICONS.gear, text: 'Продление ресурса АКБ' },
 ];
 
 const ENGINE_SYMPTOMS = [
-    {icon: SERVICE_ICONS.warning, text: 'Повышенный расход масла'},
-    {icon: SERVICE_ICONS.warning, text: 'Посторонние шумы'},
-    {icon: SERVICE_ICONS.warning, text: 'Дым из выхлопной'},
-    {icon: SERVICE_ICONS.warning, text: 'Потеря тяги'},
-    {icon: SERVICE_ICONS.warning, text: 'Перегрев двигателя'},
+    { icon: SERVICE_ICONS.warning, text: 'Повышенный расход масла' },
+    { icon: SERVICE_ICONS.warning, text: 'Посторонние шумы' },
+    { icon: SERVICE_ICONS.warning, text: 'Дым из выхлопной' },
+    { icon: SERVICE_ICONS.warning, text: 'Потеря тяги' },
+    { icon: SERVICE_ICONS.warning, text: 'Перегрев двигателя' },
+];
+
+const ELECTRO_SYMPTOMS = [
+    { icon: SERVICE_ICONS.warning, text: 'Ошибки на панели' },
+    { icon: SERVICE_ICONS.warning, text: 'Мерцание света' },
+    { icon: SERVICE_ICONS.warning, text: 'Трудный запуск' },
+    { icon: SERVICE_ICONS.warning, text: 'Отказ систем' },
+    { icon: SERVICE_ICONS.warning, text: 'Запах гари' },
 ];
 
 const DEFAULT_HERO = img('/mock/services/modalbg.png', 'Автосервис Авторитет');
 const DEFAULT_TRUST_IMAGE = img('/mock/services/modal2gisbg.png', 'Премия 2ГИС');
 
 function popular(title, price, url) {
-    return {title, price, image: img(url, title)};
+    return { title, price, image: img(url, title) };
 }
 
 export const services = [
@@ -51,22 +67,22 @@ export const services = [
             popular('Чистка форсунок', 'от 3 200 руб.', '/mock/services/fuel-system.webp'),
         ],
         priceList: [
-            {title: 'Диагностика двигателя', price: 'от 1 200 руб.'},
-            {title: 'Замена масла двигателя', price: 'от 1 100 руб.'},
-            {title: 'Замена масляного фильтра', price: 'от 550 руб.'},
-            {title: 'Замена воздушного фильтра', price: 'от 550 руб.'},
-            {title: 'Замена свечей зажигания', price: 'от 2 450 руб.'},
-            {title: 'Замена ремня ГРМ', price: 'от 8 500 руб.'},
-            {title: 'Замена цепи ГРМ', price: 'от 18 000 руб.'},
-            {title: 'Ремонт головки блока цилиндров', price: 'от 25 000 руб.'},
-            {title: 'Капитальный ремонт двигателя', price: 'от 85 000 руб.'},
-            {title: 'Чистка дроссельной заслонки', price: 'от 2 800 руб.'},
-            {title: 'Чистка форсунок', price: 'от 3 200 руб.'},
-            {title: 'Замена прокладки ГБЦ', price: 'от 12 000 руб.'},
-            {title: 'Замена помпы', price: 'от 4 500 руб.'},
-            {title: 'Замена термостата', price: 'от 2 900 руб.'},
-            {title: 'Регулировка клапанов', price: 'от 3 500 руб.'},
-            {title: 'Замена прокладки клапанной крышки', price: 'от 2 200 руб.'},
+            { title: 'Диагностика двигателя', price: 'от 1 200 руб.' },
+            { title: 'Замена масла двигателя', price: 'от 1 100 руб.' },
+            { title: 'Замена масляного фильтра', price: 'от 550 руб.' },
+            { title: 'Замена воздушного фильтра', price: 'от 550 руб.' },
+            { title: 'Замена свечей зажигания', price: 'от 2 450 руб.' },
+            { title: 'Замена ремня ГРМ', price: 'от 8 500 руб.' },
+            { title: 'Замена цепи ГРМ', price: 'от 18 000 руб.' },
+            { title: 'Ремонт головки блока цилиндров', price: 'от 25 000 руб.' },
+            { title: 'Капитальный ремонт двигателя', price: 'от 85 000 руб.' },
+            { title: 'Чистка дроссельной заслонки', price: 'от 2 800 руб.' },
+            { title: 'Чистка форсунок', price: 'от 3 200 руб.' },
+            { title: 'Замена прокладки ГБЦ', price: 'от 12 000 руб.' },
+            { title: 'Замена помпы', price: 'от 4 500 руб.' },
+            { title: 'Замена термостата', price: 'от 2 900 руб.' },
+            { title: 'Регулировка клапанов', price: 'от 3 500 руб.' },
+            { title: 'Замена прокладки клапанной крышки', price: 'от 2 200 руб.' },
         ],
         trust: {
             image: img('/mock/services/modal2gisbg.png', 'Премия 2ГИС'),
@@ -83,18 +99,18 @@ export const services = [
         description:
             'Исправная подвеска — это комфорт и безопасность. Диагностируем износ узлов, устраняем стуки и восстанавливаем геометрию.',
         benefits: [
-            {icon: SERVICE_ICONS.engine, text: 'Комфорт на любой дороге'},
-            {icon: SERVICE_ICONS.car, text: 'Устойчивость в поворотах'},
-            {icon: SERVICE_ICONS.fire, text: 'Меньший износ шин'},
-            {icon: SERVICE_ICONS.gears, text: 'Точная управляемость'},
-            {icon: SERVICE_ICONS.gear, text: 'Предсказуемое поведение'},
+            { icon: SERVICE_ICONS.engine, text: 'Комфорт на любой дороге' },
+            { icon: SERVICE_ICONS.car, text: 'Устойчивость в поворотах' },
+            { icon: SERVICE_ICONS.fire, text: 'Меньший износ шин' },
+            { icon: SERVICE_ICONS.gears, text: 'Точная управляемость' },
+            { icon: SERVICE_ICONS.gear, text: 'Предсказуемое поведение' },
         ],
         symptoms: [
-            {icon: SERVICE_ICONS.warning, text: 'Стуки на кочках'},
-            {icon: SERVICE_ICONS.warning, text: 'Увод в сторону'},
-            {icon: SERVICE_ICONS.warning, text: 'Неравномерный износ шин'},
-            {icon: SERVICE_ICONS.warning, text: 'Течи амортизаторов'},
-            {icon: SERVICE_ICONS.warning, text: 'Крен кузова'},
+            { icon: SERVICE_ICONS.warning, text: 'Стуки на кочках' },
+            { icon: SERVICE_ICONS.warning, text: 'Увод в сторону' },
+            { icon: SERVICE_ICONS.warning, text: 'Неравномерный износ шин' },
+            { icon: SERVICE_ICONS.warning, text: 'Течи амортизаторов' },
+            { icon: SERVICE_ICONS.warning, text: 'Крен кузова' },
         ],
         popular: [
             popular('Диагностика ходовой', 'от 1 350 руб.', '/mock/services/engine1.png'),
@@ -103,14 +119,14 @@ export const services = [
             popular('Замена сайлентблоков', 'от 3 200 руб.', '/mock/services/engine4.png'),
         ],
         priceList: [
-            {title: 'Диагностика ходовой части', price: 'от 1 350 руб.'},
-            {title: 'Замена амортизатора', price: 'от 4 500 руб.'},
-            {title: 'Замена пружины', price: 'от 3 800 руб.'},
-            {title: 'Замена шаровой опоры', price: 'от 2 800 руб.'},
-            {title: 'Замена стойки стабилизатора', price: 'от 1 600 руб.'},
-            {title: 'Замена сайлентблока', price: 'от 3 200 руб.'},
-            {title: 'Замена ступичного подшипника', price: 'от 4 200 руб.'},
-            {title: 'Развал-схождение', price: 'от 2 500 руб.'},
+            { title: 'Диагностика ходовой части', price: 'от 1 350 руб.' },
+            { title: 'Замена амортизатора', price: 'от 4 500 руб.' },
+            { title: 'Замена пружины', price: 'от 3 800 руб.' },
+            { title: 'Замена шаровой опоры', price: 'от 2 800 руб.' },
+            { title: 'Замена стойки стабилизатора', price: 'от 1 600 руб.' },
+            { title: 'Замена сайлентблока', price: 'от 3 200 руб.' },
+            { title: 'Замена ступичного подшипника', price: 'от 4 200 руб.' },
+            { title: 'Развал-схождение', price: 'от 2 500 руб.' },
         ],
         trust: {
             image: img('/mock/services/modal2gisbg.png', 'Диагностика подвески'),
@@ -141,12 +157,12 @@ export const services = [
             popular('Замена компрессора', 'от 12 000 руб.', '/mock/services/engine4.png'),
         ],
         priceList: [
-            {title: 'Диагностика кондиционера', price: 'от 550 руб.'},
-            {title: 'Заправка фреоном', price: 'от 2 500 руб.'},
-            {title: 'Поиск утечки', price: 'от 1 900 руб.'},
-            {title: 'Замена компрессора', price: 'от 12 000 руб.'},
-            {title: 'Замена радиатора кондиционера', price: 'от 8 500 руб.'},
-            {title: 'Антибактериальная обработка', price: 'от 1 800 руб.'},
+            { title: 'Диагностика кондиционера', price: 'от 550 руб.' },
+            { title: 'Заправка фреоном', price: 'от 2 500 руб.' },
+            { title: 'Поиск утечки', price: 'от 1 900 руб.' },
+            { title: 'Замена компрессора', price: 'от 12 000 руб.' },
+            { title: 'Замена радиатора кондиционера', price: 'от 8 500 руб.' },
+            { title: 'Антибактериальная обработка', price: 'от 1 800 руб.' },
         ],
         trust: {
             image: img('/mock/services/modal2gisbg.png', 'Сервис кондиционера'),
@@ -177,13 +193,13 @@ export const services = [
             popular('Диагностика тормозов', 'от 1 200 руб.', '/mock/services/engine4.png'),
         ],
         priceList: [
-            {title: 'Диагностика тормозной системы', price: 'от 1 200 руб.'},
-            {title: 'Замена передних колодок', price: 'от 1 600 руб.'},
-            {title: 'Замена задних колодок', price: 'от 1 800 руб.'},
-            {title: 'Замена тормозного диска', price: 'от 4 200 руб.'},
-            {title: 'Замена тормозной жидкости', price: 'от 2 100 руб.'},
-            {title: 'Прокачка тормозов', price: 'от 1 800 руб.'},
-            {title: 'Замена суппорта', price: 'от 6 500 руб.'},
+            { title: 'Диагностика тормозной системы', price: 'от 1 200 руб.' },
+            { title: 'Замена передних колодок', price: 'от 1 600 руб.' },
+            { title: 'Замена задних колодок', price: 'от 1 800 руб.' },
+            { title: 'Замена тормозного диска', price: 'от 4 200 руб.' },
+            { title: 'Замена тормозной жидкости', price: 'от 2 100 руб.' },
+            { title: 'Прокачка тормозов', price: 'от 1 800 руб.' },
+            { title: 'Замена суппорта', price: 'от 6 500 руб.' },
         ],
         trust: {
             image: img('/mock/services/modal2gisbg.png', 'Ремонт тормозов'),
@@ -211,12 +227,12 @@ export const services = [
             popular('Ремонт МКПП', 'от 25 000 руб.', '/mock/services/engine4.png'),
         ],
         priceList: [
-            {title: 'Диагностика трансмиссии', price: 'от 2 600 руб.'},
-            {title: 'Замена масла МКПП', price: 'от 2 800 руб.'},
-            {title: 'Замена масла АКПП', price: 'от 4 800 руб.'},
-            {title: 'Замена сцепления', price: 'от 18 000 руб.'},
-            {title: 'Замена привода', price: 'от 5 500 руб.'},
-            {title: 'Ремонт АКПП', price: 'от 45 000 руб.'},
+            { title: 'Диагностика трансмиссии', price: 'от 2 600 руб.' },
+            { title: 'Замена масла МКПП', price: 'от 2 800 руб.' },
+            { title: 'Замена масла АКПП', price: 'от 4 800 руб.' },
+            { title: 'Замена сцепления', price: 'от 18 000 руб.' },
+            { title: 'Замена привода', price: 'от 5 500 руб.' },
+            { title: 'Ремонт АКПП', price: 'от 45 000 руб.' },
         ],
         trust: {
             image: img('/mock/services/modal2gisbg.png', 'Обслуживание КПП'),
@@ -244,11 +260,11 @@ export const services = [
             popular('Замена катализатора', 'от 12 000 руб.', '/mock/services/engine4.png'),
         ],
         priceList: [
-            {title: 'Диагностика выхлопной системы', price: 'от 1 375 руб.'},
-            {title: 'Замена гофры', price: 'от 3 500 руб.'},
-            {title: 'Замена резонатора', price: 'от 4 000 руб.'},
-            {title: 'Замена глушителя', price: 'от 4 200 руб.'},
-            {title: 'Замена катализатора', price: 'от 12 000 руб.'},
+            { title: 'Диагностика выхлопной системы', price: 'от 1 375 руб.' },
+            { title: 'Замена гофры', price: 'от 3 500 руб.' },
+            { title: 'Замена резонатора', price: 'от 4 000 руб.' },
+            { title: 'Замена глушителя', price: 'от 4 200 руб.' },
+            { title: 'Замена катализатора', price: 'от 12 000 руб.' },
         ],
         trust: {
             image: img('/mock/services/modal2gisbg.png', 'Ремонт выхлопа'),
@@ -276,11 +292,11 @@ export const services = [
             popular('Диагностика топливной', 'от 1 500 руб.', '/mock/services/engine4.png'),
         ],
         priceList: [
-            {title: 'Диагностика топливной системы', price: 'от 1 500 руб.'},
-            {title: 'Замена топливного фильтра', price: 'от 1 375 руб.'},
-            {title: 'Чистка форсунок', price: 'от 3 200 руб.'},
-            {title: 'Замена бензонасоса', price: 'от 6 500 руб.'},
-            {title: 'Замена регулятора давления', price: 'от 3 800 руб.'},
+            { title: 'Диагностика топливной системы', price: 'от 1 500 руб.' },
+            { title: 'Замена топливного фильтра', price: 'от 1 375 руб.' },
+            { title: 'Чистка форсунок', price: 'от 3 200 руб.' },
+            { title: 'Замена бензонасоса', price: 'от 6 500 руб.' },
+            { title: 'Замена регулятора давления', price: 'от 3 800 руб.' },
         ],
         trust: {
             image: img('/mock/services/modal2gisbg.png', 'Топливная система'),
@@ -308,12 +324,12 @@ export const services = [
             popular('Компьютерная диагностика', 'от 1 200 руб.', '/mock/services/engine4.png'),
         ],
         priceList: [
-            {title: 'Компьютерная диагностика', price: 'от 1 200 руб.'},
-            {title: 'Замена масла двигателя', price: 'от 1 100 руб.'},
-            {title: 'Замена воздушного фильтра', price: 'от 550 руб.'},
-            {title: 'Замена салонного фильтра', price: 'от 550 руб.'},
-            {title: 'Замена свечей', price: 'от 2 450 руб.'},
-            {title: 'ТО по регламенту', price: 'от 3 500 руб.'},
+            { title: 'Компьютерная диагностика', price: 'от 1 200 руб.' },
+            { title: 'Замена масла двигателя', price: 'от 1 100 руб.' },
+            { title: 'Замена воздушного фильтра', price: 'от 550 руб.' },
+            { title: 'Замена салонного фильтра', price: 'от 550 руб.' },
+            { title: 'Замена свечей', price: 'от 2 450 руб.' },
+            { title: 'ТО по регламенту', price: 'от 3 500 руб.' },
         ],
         trust: {
             image: img('/mock/services/modal2gisbg.png', 'Плановое ТО'),
@@ -323,9 +339,9 @@ export const services = [
     },
     {
         slug: 'steering-system',
-        title: 'Рулевое управление\nЭлектрооборудование',
+        title: 'Рулевое управление',
         price: 'от 550 руб.',
-        image: img('/mock/services/steering-system.webp', 'Рулевое управление и электрооборудование'),
+        image: img('/mock/services/steering-system.webp', 'Рулевое управление'),
         heroImage: DEFAULT_HERO,
         description:
             'Ремонт рулевых реек, наконечников и электрики: от аккумулятора до генератора и стартера.',
@@ -341,12 +357,12 @@ export const services = [
             popular('Замена генератора', 'от 5 500 руб.', '/mock/services/engine4.png'),
         ],
         priceList: [
-            {title: 'Диагностика электрооборудования', price: 'от 550 руб.'},
-            {title: 'Замена рулевого наконечника', price: 'от 2 200 руб.'},
-            {title: 'Замена рулевой тяги', price: 'от 2 800 руб.'},
-            {title: 'Ремонт рулевой рейки', price: 'от 12 000 руб.'},
-            {title: 'Замена генератора', price: 'от 5 500 руб.'},
-            {title: 'Замена стартера', price: 'от 4 800 руб.'},
+            { title: 'Диагностика электрооборудования', price: 'от 550 руб.' },
+            { title: 'Замена рулевого наконечника', price: 'от 2 200 руб.' },
+            { title: 'Замена рулевой тяги', price: 'от 2 800 руб.' },
+            { title: 'Ремонт рулевой рейки', price: 'от 12 000 руб.' },
+            { title: 'Замена генератора', price: 'от 5 500 руб.' },
+            { title: 'Замена стартера', price: 'от 4 800 руб.' },
         ],
         trust: {
             image: img('/mock/services/modal2gisbg.png', 'Рулевое и электрика'),
@@ -374,12 +390,12 @@ export const services = [
             popular('Промывка системы', 'от 3 500 руб.', '/mock/services/engine4.png'),
         ],
         priceList: [
-            {title: 'Диагностика системы охлаждения', price: 'от 550 руб.'},
-            {title: 'Замена антифриза', price: 'от 2 200 руб.'},
-            {title: 'Замена термостата', price: 'от 2 900 руб.'},
-            {title: 'Замена помпы', price: 'от 4 500 руб.'},
-            {title: 'Замена радиатора', price: 'от 7 500 руб.'},
-            {title: 'Промывка системы охлаждения', price: 'от 3 500 руб.'},
+            { title: 'Диагностика системы охлаждения', price: 'от 550 руб.' },
+            { title: 'Замена антифриза', price: 'от 2 200 руб.' },
+            { title: 'Замена термостата', price: 'от 2 900 руб.' },
+            { title: 'Замена помпы', price: 'от 4 500 руб.' },
+            { title: 'Замена радиатора', price: 'от 7 500 руб.' },
+            { title: 'Промывка системы охлаждения', price: 'от 3 500 руб.' },
         ],
         trust: {
             image: DEFAULT_TRUST_IMAGE,
@@ -387,6 +403,87 @@ export const services = [
             text: 'Проверяем герметичность, меняем антифриз и узлы по результату опрессовки. Стабильная температура — меньше риска дорогого ремонта мотора.',
         },
     },
+    {
+        slug: 'electro-system',
+        title: 'Электрооборудование',
+        price: 'от 550 руб.',
+        image: img('/mock/services/electro.jpg', 'Электрооборудование'),
+        heroImage: DEFAULT_HERO,
+        description:
+            'Современный автомобиль наполовину состоит из электроники. Сбой в любой цепи может привести к отказу важных систем.',
+        benefits: ELECTRO_BENEFITS,
+        symptoms: ELECTRO_SYMPTOMS.map((s, i) => ({
+            ...s,
+            // text: ['Люфт руля', 'Тяжёлое руление', 'Стук в рейке', 'Разряд АКБ', 'Не крутит стартер'][i],
+        })),
+        popular: [
+            popular('Компьютерная диагностика', 'от 2 600 руб.', '/mock/services/engine1.png'),
+            popular('Диагностика электрооборудования', 'от 2 600 руб.', '/mock/services/engine2.png'),
+            popular('Замена электропроводки', 'от 2 600 руб.', '/mock/services/engine3.png'),
+            popular('Ремонт электропроводки', 'от 2 600 руб.', '/mock/services/engine4.png'),
+        ],
+        priceList: [
+            { title: 'Замена датчиков', price: 'от 1 375 руб.' },
+            { title: 'Ремонт генератора', price: 'от 6 500 руб.' },
+            { title: 'Ремонт стартера', price: 'от 6 500 руб.' },
+            { title: 'Проверка АКБ', price: 'от 1 375 руб.' },
+            { title: 'Замена АКБ', price: 'от 1 375 руб.' },
+            { title: 'Ремонт и замена стеклоподъёмника', price: 'от 3 900 руб.' },
+            { title: 'Замена ламп', price: 'от 550 руб.' },
+            { title: 'Установка допоборудования', price: 'от 2 600руб.' },
+        ],
+        trust: {
+            image: img('/mock/services/modal2gisbg.png', 'Электрооборудование'),
+            title: 'Почему клиенты доверяют нам',
+            text: 'Мы используем профессиональные сканеры и работаем с электрикой любой сложности. Исправная электроника — это комфорт и безопасность',
+        },
+    },
+    {
+        slug: 'tyres-service',
+        title: 'Шиномонтаж',
+        //  benefitsTitle:
+        symptomsTitle: 'Признаки, что нужен шиномонтаж:',
+        price: 'от 1 250 руб.',
+        image: img('/mock/services/tyres.jpg', 'Шиномонтаж'),
+        heroImage: img('/mock/services/modalbgtyres.jpg', 'Шиномонтаж'),
+        description:
+            'Шины — единственный элемент автомобиля, который контактирует с дорогой.    От их состояния зависит управляемость, торможение и безопасность. Неправильный монтаж, дисбаланс или износ могут привести к вибрациям, увеличенному тормозному пути и повреждению подвески',
+        benefits: ELECTRO_BENEFITS.map((s, i) => ({
+            ...s,
+            text: ['Ровное и предсказуемое поведение автомобиля',
+                'Отсутствие вибраций на руле и кузове',
+                'Правильный износ шин',
+                'Снижение нагрузки на подвеску',
+                'Безопасное торможение и устойчивость на дороге'][i],
+        })),
+        symptoms: ELECTRO_SYMPTOMS.map((s, i) => ({
+            ...s,
+            text: ['Вибрации на скорости',
+                'Неравномерный износ протектора',
+                'Увод автомобиля в сторону',
+                'Потеря давления в колесе',
+                'Посторонние звуки при движении'][i],
+        })),
+        // popular: [
+        //     popular('Компьютерная диагностика', 'от 2 600 руб.', '/mock/services/engine1.png'),
+        //     popular('Диагностика электрооборудования', 'от 2 600 руб.', '/mock/services/engine2.png'),
+        //     popular('Замена электропроводки', 'от 2 600 руб.', '/mock/services/engine3.png'),
+        //     popular('Замена электропроводки', 'от 2 600 руб.', '/mock/services/engine4.png'),
+        // ],
+        priceList: [
+            { title: 'Шиномонтаж и балансировка колес 13-14 радиус', price: 'от 3 150 руб.' },
+            { title: 'Шиномонтаж и балансировка колес 15-16 радиус', price: 'от 4 200 руб.' },
+            { title: 'Шиномонтаж и балансировка колес 17-19 радиус', price: 'от 5 200 руб.' },
+            { title: 'Ремонт (заплатка) и балансировка', price: 'от 1 250 руб.' },
+            { title: 'Балансировка колес', price: 'от 2 500 руб.' },
+        ],
+        trust: {
+            image: img('/mock/services/modal2gisbg.png', 'Шиномонтаж'),
+            title: 'Почему клиенты доверяют нам',
+            text: `Мы используем профессиональное оборудование, соблюдаем технологию монтажа, аккуратно работаем с дисками и выполняем точную балансировку. Проверяем давление, состояние протектора и даём рекомендации по дальнейшей эксплуатации \n\n
+            Правильный шиномонтаж — это комфортная езда, надёжное сцепление и безопасность в любых дорожных условиях.`,
+        },
+    }
 ];
 
 export function toServiceCard(service) {
@@ -407,9 +504,9 @@ export function toServiceDetail(service) {
         description: service.description,
         heroImage: service.heroImage,
         quickForm: forms.quick,
-        benefitsTitle: modal.benefitsTitle,
+        benefitsTitle: service.benefitsTitle ? service.benefitsTitle : modal.benefitsTitle,
         benefits: service.benefits,
-        symptomsTitle: modal.symptomsTitle,
+        symptomsTitle: service.symptomsTitle ? service.symptomsTitle : modal.symptomsTitle,
         symptoms: service.symptoms,
         trust: service.trust,
         popularTitle: modal.popularTitle,

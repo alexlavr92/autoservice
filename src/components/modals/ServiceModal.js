@@ -9,15 +9,21 @@ import ServicePopular from '@/components/modals/service/ServicePopular';
 import ServicePriceList from '@/components/modals/service/ServicePriceList';
 import Contacts from '@/components/sections/Contacts/Contacts';
 import ServiceContactForm from '@/components/modals/service/ServiceContactForm';
-import {getMockSection, getServiceDetail} from '@/lib/mock-data';
-import {useModalStore} from '../../../public/store/useModalStore';
+import { getMockSection, getServiceDetail } from '@/lib/mock-data';
+import { useModalStore } from '../../../public/store/useModalStore';
 
 export default function ServiceModal() {
-    const {activeModal, modalPayload, closeModal} = useModalStore();
+    const { activeModal, modalPayload, closeModal } = useModalStore();
     const isOpen = activeModal === 'service';
     const detail = getServiceDetail(modalPayload?.slug);
     const contactsData = getMockSection('contacts');
     const contactFormData = getMockSection('contact_form');
+
+    const isTireService = detail?.slug === 'tyres-service';
+
+    const filteredContacts = isTireService
+        ? { ...contactsData, branches: [contactsData.branches[0]] }
+        : contactsData;
 
     return (
         <Modal isOpen={isOpen && !!detail} onClose={closeModal} variant="sheet" showClose>
@@ -27,9 +33,9 @@ export default function ServiceModal() {
                     <ServiceBenefits title={detail.benefitsTitle} items={detail.benefits} />
                     <ServiceSymptoms title={detail.symptomsTitle} items={detail.symptoms} />
                     <ServiceTrust data={detail.trust} />
-                    <ServicePopular title={detail.popularTitle} items={detail.popular} />
+                    {detail.popular?.length > 0 && <ServicePopular title={detail.popularTitle} items={detail.popular} />}
                     <ServicePriceList title={detail.priceListTitle} items={detail.priceList} subtitle={detail.priceListSubTitle} />
-                    {contactsData && <Contacts data={contactsData} embedded />}
+                    {contactsData && <Contacts data={filteredContacts} embedded />}
                     {contactFormData && <ServiceContactForm data={contactFormData} />}
                 </div>
             )}

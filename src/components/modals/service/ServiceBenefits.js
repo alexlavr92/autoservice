@@ -1,6 +1,8 @@
 import ServiceGlyph from '@/components/modals/service/ServiceGlyph';
 
-export default function ServiceBenefits({title, items}) {
+export default function ServiceBenefits({ title, items }) {
+    console.log(items)
+
     return (
         <section className="px-2.5 py-20 md:px-[30] md:py-12 lg:py-[80]">
             <h3 className="text-center md:text-left font-heading font-medium text-[25px] md:text-[28px] lg:text-[34px] leading-none text-foreground lg:max-w-[500]">
@@ -10,7 +12,7 @@ export default function ServiceBenefits({title, items}) {
                 {items.map((item) => (
                     <div key={item.text} className="flex flex-col items-start text-left gap-2.5 md:gap-3.5 lg:gap-5 bg-foreground-fixed p-[15] md:p-5 rounded-[20] md:rounded-[30]">
                         <ServiceGlyph src={item.icon} alt={item.text} />
-                        <p className="font-helvetica font-medium text-sm md:text-lg leading-tight text-black max-w-[160]">
+                        <p className="font-helvetica font-medium text-sm md:text-lg leading-tight text-black max-w-[160] lg:max-w-none font-medium">
                             {item.text}
                         </p>
                     </div>

@@ -1,43 +1,48 @@
-import {Container} from "@/components/Container";
+import { Container } from "@/components/Container";
 import Icon from "@/components/icons/Icon";
 import BlurredCircle from "@/components/ui/blurredCircle";
 import BranchCard from "@/components/sections/Contacts/BranchCard";
 import MapConnectors from "@/components/sections/Contacts/MapConnectors";
 import Image from "next/image";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import {mediaAlt, mediaUrl} from "@/lib/media";
+import { mediaAlt, mediaUrl } from "@/lib/media";
 
-export default function Contacts({data, embedded = false}) {
-    const {email, mapImage, mapImageDark, mapImageModal, mapAlt, branches = []} = data;
+export default function Contacts({ data, embedded = false }) {
+    const { email, mapImage, mapImageDark, mapImageModal, mapAlt, branches = [] } = data;
     const [left, right] = branches;
     const lightMap = embedded && mapImageModal ? mapImageModal : mapImage;
+
+    console.log(branches, left, right);
 
     return (
         <section className={`relative overflow-hidden ${embedded ? 'py-20 md:py-16 lg:pb-[150] lg:pt-20 px-0' : 'py-10 md:py-20 lg:py-[150]'}`}>
             <Container className={`relative ${embedded ? '!px-2.5 md:!px-[30] lg:!px-10 z-0' : ''}`}>
                 <ScrollReveal>
-                   <div className={'relative z-20 left-auto top-0 mb-10 md:mb-[50] items-center flex justify-center lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:mb-0'}>
-                       <a
-                           href={`mailto:${email}`}
-                           className={`shadow-[0_0_20px_0_var(--color-btn-shadow)] cursor-pointer inline-flex items-center gap-2.5 rounded-full bg-background px-5 py-2.5 font-bold text-sm ${embedded ? 'items-end' : ''} text-foreground transition hover:opacity-80`}
-                       >
-                           <Icon name="mail" className="size-6 shrink-0 text-foreground"/>
-                           <span>{email}</span>
-                       </a>
-                   </div>
+                    <div className={'relative z-20 left-auto top-0 mb-10 md:mb-[50] items-center flex justify-center lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:mb-0'}>
+                        <a
+                            href={`mailto:${email}`}
+                            className={`shadow-[0_0_20px_0_var(--color-btn-shadow)] cursor-pointer inline-flex items-center gap-2.5 rounded-full bg-background px-5 py-2.5 font-bold text-sm ${embedded ? 'items-end' : ''} text-foreground transition hover:opacity-80`}
+                        >
+                            <Icon name="mail" className="size-6 shrink-0 text-foreground" />
+                            <span>{email}</span>
+                        </a>
+                    </div>
                 </ScrollReveal>
 
                 <ScrollReveal
                     stagger
-                    className="relative flex-col md:flex-row flex justify-between items-center md:items-start gap-[30] md:gap-6 lg:gap-0"
+                    className="relative flex-col md:flex-row flex justify-center lg:justify-between  items-center md:items-start gap-[30] md:gap-6 lg:gap-0"
                 >
-                    <div className="flex-1 lg:flex-none">
-                        {left && <BranchCard branch={left} embedded={embedded} side="left"/>}
-                    </div>
 
-                    <div className="flex-1 lg:flex-none">
-                        {right && <BranchCard branch={right} embedded={embedded} side="right"/>}
-                    </div>
+                    {left &&
+                        (<div className="flex-1 lg:flex-none">
+                            < BranchCard branch={left} embedded={embedded} side="left" />
+                        </div>)
+                    }
+                    {right &&
+                        (<div className="flex-1 lg:flex-none">
+                            < BranchCard branch={right} embedded={embedded} side="right" />
+                        </div>)}
                 </ScrollReveal>
                 <ScrollReveal
                     delay={0.15}
@@ -60,8 +65,8 @@ export default function Contacts({data, embedded = false}) {
                         />
                     )}
                 </ScrollReveal>
-                <MapConnectors branches={branches} embedded={embedded}/>
+                <MapConnectors branches={branches} embedded={embedded} />
             </Container>
-        </section>
+        </section >
     );
 }

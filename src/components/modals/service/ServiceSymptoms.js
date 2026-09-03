@@ -1,6 +1,6 @@
 import ServiceGlyph from '@/components/modals/service/ServiceGlyph';
 
-export default function ServiceSymptoms({title, items}) {
+export default function ServiceSymptoms({ title, items }) {
     return (
         <section className="px-5 pb-[70] md:px-[30] md:pb-12 lg:pb-[80]">
             <h3 className="font-heading text-center font-medium md:text-left text-[25px] md:text-[22px] lg:text-[34px] leading-none text-foreground">

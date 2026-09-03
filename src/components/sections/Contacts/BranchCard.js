@@ -2,9 +2,9 @@
 
 import Button from "@/components/ui/Button";
 import Icon from "@/components/icons/Icon";
-import {useModalStore} from "../../../../public/store/useModalStore";
+import { useModalStore } from "../../../../public/store/useModalStore";
 
-export default function BranchCard({branch, embedded = false, side}) {
+export default function BranchCard({ branch, embedded = false, side }) {
     const phoneHref = `tel:${branch.phone.replace(/\D/g, '')}`;
     const openPanorama = useModalStore((s) => s.openPanorama);
 
@@ -14,7 +14,7 @@ export default function BranchCard({branch, embedded = false, side}) {
         >
             <div className="text-center max-w-[250]">
                 <p className={`flex justify-center font-medium items-center gap-1.5 font-helvetica text-xs md:text-lg text-foreground`}>
-                    <Icon name="star" className="text-primary-light size-2 md:size-3 shrink-0"/>
+                    <Icon name="star" className="text-primary-light size-2 md:size-3 shrink-0" />
                     {branch.name}
                 </p>
                 <p className="mt-2.5 md:mt-5 md:mt-7 font-medium text-sm md:text-base lg:text-[22px] font-heading leading-none text-foreground whitespace-break-spaces">{branch.address}</p>

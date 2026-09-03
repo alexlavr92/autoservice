@@ -1,16 +1,16 @@
 'use client';
 
-import {useState} from 'react';
+import { useState } from 'react';
 import Button from '@/components/ui/Button';
 
 const MOBILE_INITIAL_COUNT = 10;
 
-export default function ServicePriceList({title, items, subtitle}) {
+export default function ServicePriceList({ title, items, subtitle }) {
     const [expanded, setExpanded] = useState(false);
     const hasMore = items.length > MOBILE_INITIAL_COUNT;
 
     return (
-        <section className="px-2.5 md:px-[30] lg:px-10">
+        <section className="px-2.5 md:px-[30] lg:px-10 pt-20 md:pt-12 lg:pt-[80]">
             <h3 className="text-center md:text-left font-heading font-medium text-[25px] md:text-[28px] lg:text-[34px] leading-none text-foreground">
                 {title}
             </h3>
@@ -21,9 +21,8 @@ export default function ServicePriceList({title, items, subtitle}) {
                 {items.map((item, index) => (
                     <li
                         key={item.title}
-                        className={`mb-2.5 flex gap-5 md:flex-row items-center justify-between px-2.5 py-[15] md:px-[30] md:py-[21] lg:px-[35] rounded-[10] md:rounded-full bg-foreground-fixed ${
-                            !expanded && index >= MOBILE_INITIAL_COUNT ? 'max-md:hidden' : ''
-                        }`}
+                        className={`mb-2.5 flex gap-5 md:flex-row items-center justify-between px-2.5 py-[15] md:px-[30] md:py-[21] lg:px-[35] rounded-[10] md:rounded-full bg-foreground-fixed ${!expanded && index >= MOBILE_INITIAL_COUNT ? 'max-md:hidden' : ''
+                            }`}
                     >
                         <span className="font-helvetica leading-none font-medium text-sm text-left md:text-lg lg:text-[22px] text-black">
                             {item.title}

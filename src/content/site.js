@@ -1,4 +1,4 @@
-import {img} from '@/lib/media';
+import { img } from '@/lib/media';
 
 export const site = {
     seo: {
@@ -46,8 +46,8 @@ export const site = {
     },
     serviceModal: {
         mark: 'Услуги',
-        benefitsTitle: 'Что дает своевременный уход и ремонт',
-        symptomsTitle: 'Признаки неисправностей:',
+        benefitsTitle: 'Что даёт своевременное обслуживание:',
+        symptomsTitle: 'Признаки неисправности:',
         popularTitle: 'Популярные услуги',
         priceListTitle: 'Все услуги*',
         priceListSubTitle:
@@ -59,32 +59,32 @@ export const site = {
         logo: img('/mock/logo.png', 'main Logo'),
         menu: [
             {label: 'Об автосервисе', link: '/#about'},
-            {label: 'Услуги', link: '/#services'},
-            {label: 'Контакты', link: '/#contacts'},
-            {label: 'Новости', link: '/news'},
-            {label: 'Коммерческий транспорт', link: '/#commercial'},
-        ],
-        socials: [
-            {name: 'vk', url: 'https://vk.com/example', logo: img('/mock/vk-logo.png', 'Vk'), alt: 'Vk'},
-        ],
+            { label: 'Услуги', link: '/#services'},       
+            { label: 'Контакты', link: '/#contact s'},
+            { label: 'Новости', link: '/news'},       
+            { label: 'Коммерческий транспорт' , link: '/#commercial'},
+        ],     
+    socials: [
+        {name: 'vk', url: 'https://vk.com/example', logo: img('/mock/vk-logo.png', 'Vk'), alt: 'Vk'},
+],   
     },
     footer: {
-        logo: img('/mock/footer-logo.png', 'Авторитет'),
-        logoDark: img('/mock/footer-logo-light.png', 'Авторитет'),
+    logo: img('/mock/footer-logo.png', 'Авторитет'),
+    logoDark: img('/mock/footer-logo-light.png', 'Авторитет'),
         copyright: 'Авторитет',
-        legal: [
-            {label: 'Политика конфиденциальности', slug: 'privacy'},
-            {label: 'Согласие на обработку перс. данных', slug: 'personal-data'},
-        ],
-        socials: [
-            {
-                name: 'vk',
-                url: 'https://vk.com/example',
-                logo: img('/mock/vk-logo-black.png', 'Vk'),
-                logoDark: img('/mock/vk-logo.png', 'Vk'),
-                alt: 'Vk',
-            },
-        ],
+            legal: [
+                    {label: 'Политика конфиденциальности', slug: 'privacy'},
+                    { label: 'Согласие на обработку перс. данных', slug: 'personal-data'},    
+                ],   
+                        socials: [
+                        {
+                            name: 'vk',
+                            url: 'https://vk.com/example',
+                            logo: img('/mock/vk-logo-black.png', 'Vk'),
+                            logoDark: img('/mock/vk-logo.png', 'Vk'),
+                           lt: 'Vk',
+                        }, 
+    ],
     },
 };
 

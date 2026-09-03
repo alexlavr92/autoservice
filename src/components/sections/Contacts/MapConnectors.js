@@ -1,6 +1,6 @@
 'use client';
 
-import {useLayoutEffect, useRef, useState} from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import ConnectorLine from '@/components/sections/Contacts/ConnectorLine';
 
 function lineWidth(overlay, title, markerX) {
@@ -17,13 +17,13 @@ function lineWidth(overlay, title, markerX) {
  * Figma connector paths + map markers. Desktop only (lg+).
  * Rounded U-shapes from each pin toward the branch title.
  */
-export default function MapConnectors({branches, embedded = false}) {
+export default function MapConnectors({ branches, embedded = false }) {
     const [left, right] = branches;
     const overlayRef = useRef(null);
-    const [widths, setWidths] = useState({left: 0, right: 0});
+    const [widths, setWidths] = useState({ left: 0, right: 0 });
 
     useLayoutEffect(() => {
-        if (!left?.marker || !right?.marker) return undefined;
+        if (!left?.marker) return;
 
         const overlay = overlayRef.current;
         if (!overlay) return undefined;
@@ -36,11 +36,13 @@ export default function MapConnectors({branches, embedded = false}) {
                     root?.querySelector('[data-branch-title="left"]'),
                     left.marker.x,
                 ),
-                right: lineWidth(
-                    overlay,
-                    root?.querySelector('[data-branch-title="right"]'),
-                    right.marker.x,
-                ),
+                right: right?.marker
+                    ? lineWidth(
+                        overlay,
+                        root?.querySelector('[data-branch-title="right"]'),
+                        right.marker.x,
+                    )
+                    : 0,
             };
             setWidths((prev) =>
                 prev.left === next.left && prev.right === next.right ? prev : next,
@@ -74,7 +76,7 @@ export default function MapConnectors({branches, embedded = false}) {
         };
     }, [left?.marker?.x, left?.marker?.y, right?.marker?.x, right?.marker?.y]);
 
-    if (!left?.marker || !right?.marker) return null;
+    if (!left?.marker) return null;
 
     return (
         <div
@@ -82,27 +84,37 @@ export default function MapConnectors({branches, embedded = false}) {
             className="pointer-events-none absolute inset-0 z-2 hidden lg:block"
             aria-hidden
         >
-            <ConnectorLine
-                side="left"
-                marker={left.marker}
-                embedded={embedded}
-                width={widths.left}
-            />
-            <ConnectorLine
-                side="right"
-                marker={right.marker}
-                embedded={embedded}
-                width={widths.right}
-            />
+            {left?.marker && (
+                <ConnectorLine
+                    side="left"
+                    marker={left.marker}
+                    embedded={embedded}
+                    width={widths.left}
+                />
+            )}
 
-            <span
-                className="absolute size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-light"
-                style={{left: `${left.marker.x}%`, top: `${left.marker.y}%`}}
-            />
-            <span
-                className="absolute size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-light"
-                style={{left: `${right.marker.x}%`, top: `${right.marker.y}%`}}
-            />
+            {right?.marker && (
+                <ConnectorLine
+                    side="right"
+                    marker={right.marker}
+                    embedded={embedded}
+                    width={widths.right}
+                />
+            )}
+
+            {left?.marker && (
+                <span
+                    className="absolute size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-light"
+                    style={{ left: `${left.marker.x}%`, top: `${left.marker.y}%` }}
+                />
+            )}
+
+            {right?.marker && (
+                <span
+                    className="absolute size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-light"
+                    style={{ left: `${right.marker.x}%`, top: `${right.marker.y}%` }}
+                />
+            )}
         </div>
     );
 }
