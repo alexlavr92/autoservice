@@ -15,8 +15,11 @@ import SectionTitle from "@/components/ui/SectionTitle";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import FormSuccessOverlay from "@/components/ui/FormSuccessOverlay";
+import HoneypotField from "@/components/ui/HoneypotField";
 import { mediaAlt, mediaUrl } from "@/lib/media";
 import { collectFormErrors } from "@/lib/formValidation";
+import { honeypotValue, submitLead, SUBMIT_ERROR_MESSAGE } from "@/lib/submitLead";
+import { InvisibleCaptcha, useInvisibleCaptcha } from "@/lib/useInvisibleCaptcha";
 
 const CUSTOM_PART_VALUE = "__custom__";
 const CUSTOM_PART_OPTION = { value: CUSTOM_PART_VALUE, label: "Указать своё" };
@@ -50,6 +53,8 @@ export default function ContactForm({ data }) {
     const [extraOpen, setExtraOpen] = useState(false);
     const [errors, setErrors] = useState({});
     const [submitted, setSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const { captchaContainerId, executeCaptcha } = useInvisibleCaptcha();
 
     const isMobileOrTablet = useMediaQuery('(max-width: 1278px)');
 
@@ -97,8 +102,9 @@ export default function ContactForm({ data }) {
         setExtraValues((prev) => ({ ...prev, [fieldName]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        if (isSubmitting) return;
 
         const validationErrors = collectFormErrors(form.errors, {
             name,
@@ -115,26 +121,34 @@ export default function ContactForm({ data }) {
         }
 
         const payload = {
+            type: "contact",
             name: name.trim(),
             phone: getCleanPhone(phoneDigits),
             carBrand,
             timing,
             branch,
-            consent,
             extra: normalizeExtra(extraValues, form.extraSection?.fields),
+            website: honeypotValue(e.currentTarget),
         };
-        // сюда позже уйдёт fetch на WP-эндпоинт
-        // console.log(payload);
 
-        setSubmitted(true);
-        setName("");
-        setPhoneDigits("");
-        setCarBrand("");
-        setTiming("");
-        setBranch("");
-        setConsent(false);
-        setExtraValues({});
-        setExtraOpen(false);
+        setIsSubmitting(true);
+        try {
+            payload.captchaToken = await executeCaptcha();
+            await submitLead(payload);
+            setSubmitted(true);
+            setName("");
+            setPhoneDigits("");
+            setCarBrand("");
+            setTiming("");
+            setBranch("");
+            setConsent(false);
+            setExtraValues({});
+            setExtraOpen(false);
+        } catch {
+            setErrors((prev) => ({ ...prev, submit: SUBMIT_ERROR_MESSAGE }));
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const fieldInputClass = (hasError) =>
@@ -299,12 +313,14 @@ export default function ContactForm({ data }) {
     return (
         <section className="relative isolate bg-background py-[50] lg:py-[100]">
             <div className="absolute inset-x-0 top-0 -z-10 overflow-hidden h-[84vw] md:max-h-[950] lg:max-h-none lg:inset-0 lg:h-auto">
-                <Image
-                    src={mediaUrl(backgroundImage)}
-                    alt={mediaAlt(backgroundImage)}
-                    fill
-                    className="object-cover object-top"
-                />
+                {mediaUrl(backgroundImage) ? (
+                    <Image
+                        src={mediaUrl(backgroundImage)}
+                        alt={mediaAlt(backgroundImage)}
+                        fill
+                        className="object-cover object-top"
+                    />
+                ) : null}
             </div>
 
             <Container
@@ -323,6 +339,8 @@ export default function ContactForm({ data }) {
                         noValidate
                         className="relative w-full rounded-[30] bg-black/60 p-5 pb-10 md:p-[30]"
                     >
+                        <HoneypotField />
+                        <InvisibleCaptcha id={captchaContainerId} />
                         <div className="flex flex-col">
                             <div className={'flex flex-wrap gap-5 md:gap-y-6 md:gap-2.5 lg:gap-y-6 lg:gap-x-3'}>
                                 {form.fields.map(renderMainField)}
@@ -461,9 +479,14 @@ export default function ContactForm({ data }) {
                                 </div>
 
 
-                                <Button type="submit" className="shrink-0 w-full md:w-auto min-h-10 md:min-w-[180]">
-                                    {form.submitLabel}
-                                </Button>
+                                <div className="relative w-full md:w-auto">
+                                    <Button type="submit" disabled={isSubmitting} className="shrink-0 w-full md:w-auto min-h-10 md:min-w-[180]">
+                                        {form.submitLabel}
+                                    </Button>
+                                    <FieldError className="absolute left-0 top-full mt-1.5">
+                                        {errors.submit}
+                                    </FieldError>
+                                </div>
                             </div>
                         </div>
 
