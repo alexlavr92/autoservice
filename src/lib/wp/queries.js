@@ -187,7 +187,7 @@ export const SITE_QUERY = `
         title
         titleBack
         mark
-        serviceList {
+        serviceList(first: 50) {
           nodes {
             slug
             ... on Service {

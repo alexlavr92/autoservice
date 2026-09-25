@@ -21,6 +21,7 @@ export default function ServiceModal() {
     const contactFormData = sections.find((section) => section.type === 'contact_form');
 
     const relatedSlugs = detail?.branches?.filter(Boolean) ?? [];
+    console.log(detail)
     const filteredContacts = contactsData
         ? {
             ...contactsData,
@@ -29,6 +30,7 @@ export default function ServiceModal() {
                 : contactsData.branches,
         }
         : contactsData;
+
 
     return (
         <Modal isOpen={isOpen && !!detail} onClose={closeModal} variant="sheet" showClose>

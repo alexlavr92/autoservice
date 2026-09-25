@@ -18,12 +18,13 @@ function lineWidth(overlay, title, markerX) {
  * Rounded U-shapes from each pin toward the branch title.
  */
 export default function MapConnectors({ branches, embedded = false }) {
-    const [left, right] = branches;
+    const isSingleMayaBranch = branches.length === 1 && branches[0]?.slug?.includes('maya');
+    const [left, right] = isSingleMayaBranch ? [null, branches[0]] : branches;
     const overlayRef = useRef(null);
     const [widths, setWidths] = useState({ left: 0, right: 0 });
 
     useLayoutEffect(() => {
-        if (!left?.marker) return;
+        if (!left?.marker && !right?.marker) return;
 
         const overlay = overlayRef.current;
         if (!overlay) return undefined;
@@ -31,11 +32,13 @@ export default function MapConnectors({ branches, embedded = false }) {
         const measure = () => {
             const root = overlay.parentElement;
             const next = {
-                left: lineWidth(
-                    overlay,
-                    root?.querySelector('[data-branch-title="left"]'),
-                    left.marker.x,
-                ),
+                left: left?.marker
+                    ? lineWidth(
+                        overlay,
+                        root?.querySelector('[data-branch-title="left"]'),
+                        left.marker.x,
+                    )
+                    : 0,
                 right: right?.marker
                     ? lineWidth(
                         overlay,
@@ -76,7 +79,7 @@ export default function MapConnectors({ branches, embedded = false }) {
         };
     }, [left?.marker?.x, left?.marker?.y, right?.marker?.x, right?.marker?.y]);
 
-    if (!left?.marker) return null;
+    if (!left?.marker && !right?.marker) return null;
 
     return (
         <div

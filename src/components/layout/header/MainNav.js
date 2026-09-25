@@ -113,10 +113,10 @@ export default function MainNav({data, isHome, collapsed}) {
                             className="transition hover:opacity-60"
                             aria-label={social.alt || social.name}
                         >
-                            {mediaUrl(social.logo) && (
+                            {mediaUrl(social.logoDark || social.logo) && (
                                 <Image
-                                    src={mediaUrl(social.logo)}
-                                    alt={mediaAlt(social.logo, social.alt)}
+                                    src={mediaUrl(social.logoDark || social.logo)}
+                                    alt={mediaAlt(social.logoDark || social.logo, social.alt)}
                                     width={60}
                                     height={60}
                                     className="size-[30px]"
@@ -143,7 +143,7 @@ export default function MainNav({data, isHome, collapsed}) {
                                     {mockBranches.map((branch) => (
                                         <a
                                             key={branch.id}
-                                            href={`tel:${String(branch.phone || '').replace(/\D/g, '')}`}
+                                            href={`tel: ${String(branch.phone || '').replace(/\D/g, '')}`}
                                             className="rounded-xl border border-white/10 px-3 py-2.5 transition hover:bg-white/5"
                                             onClick={() => setBranchesOpen(false)}
                                         >
@@ -217,7 +217,7 @@ export default function MainNav({data, isHome, collapsed}) {
                                         {mockBranches.map((branch) => (
                                             <a
                                                 key={branch.id}
-                                                href={`tel:${String(branch.phone || '').replace(/\D/g, '')}`}
+                                                href={`tel: ${String(branch.phone || '').replace(/\D/g, '')}`}
                                                 className="rounded-xl border border-white/10 px-3 py-2.5 transition hover:bg-white/5"
                                                 onClick={closeMenu}
                                             >
@@ -328,10 +328,10 @@ export default function MainNav({data, isHome, collapsed}) {
                             href={social.url}
                             className="transition hover:opacity-60"
                         >
-                            {mediaUrl(social.logo) && (
+                            {mediaUrl(social.logoDark || social.logo) && (
                             <Image
-                                src={mediaUrl(social.logo)}
-                                alt={mediaAlt(social.logo, social.alt)}
+                                src={mediaUrl(social.logoDark || social.logo)}
+                                alt={mediaAlt(social.logoDark || social.logo, social.alt)}
                                 width={60}
                                 height={60}
                                 className="size-[30px]"

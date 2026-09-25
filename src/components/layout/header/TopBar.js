@@ -21,7 +21,7 @@ export default function TopBar({logo}) {
                         <span>{leftBranch.address}</span>
                         <div className="hover:opacity-60 transition flex gap-2 items-center">
                             <Icon name={'phone-filled'} className="size-5 text-foreground-fixed"/>
-                            <a href={`tel:${leftBranch.phone}`}>
+                            <a href={`tel: ${leftBranch.phone}`}>
                                 {leftBranch.phone}
                             </a>
                         </div>
@@ -43,7 +43,7 @@ export default function TopBar({logo}) {
                         <span>{rightBranch.address}</span>
                         <div className="hover:opacity-60 transition flex gap-2 items-center">
                             <Icon name={'phone-filled'} className="w-5 h-5"/>
-                            <a href={`tel:${rightBranch.phone}`}>
+                            <a href={`tel: ${rightBranch.phone}`}>
                                 {rightBranch.phone}
                             </a>
                         </div>

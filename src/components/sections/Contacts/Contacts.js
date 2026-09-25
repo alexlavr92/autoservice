@@ -9,15 +9,14 @@ import { mediaAlt, mediaUrl } from "@/lib/media";
 
 export default function Contacts({ data, embedded = false }) {
     const { email, mapImage, mapImageDark, mapImageModal, mapAlt, branches = [] } = data;
-    const [left, right] = branches;
+    const isSingleMayaBranch = branches.length === 1 && branches[0]?.slug?.includes('maya');
+    const [left, right] = isSingleMayaBranch ? [null, branches[0]] : branches;
     const lightMap = embedded && mapImageModal ? mapImageModal : mapImage;
-
-    // console.log(branches, left, right);
 
     return (
         <section className={`relative overflow-hidden ${embedded ? 'py-20 md:py-16 lg:pb-[150] lg:pt-20 px-0' : 'py-10 md:py-20 lg:py-[150]'}`}>
             <Container className={`relative ${embedded ? '!px-2.5 md:!px-[30] lg:!px-10 z-0' : ''}`}>
-                <ScrollReveal>
+                <ScrollReveal className="relative z-[1]">
                     <div className={'relative z-20 left-auto top-0 mb-10 md:mb-[50] items-center flex justify-center lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:mb-0'}>
                         <a
                             href={`mailto:${email}`}
@@ -31,7 +30,7 @@ export default function Contacts({ data, embedded = false }) {
 
                 <ScrollReveal
                     stagger
-                    className="relative flex-col md:flex-row flex justify-center lg:justify-between  items-center md:items-start gap-[30] md:gap-6 lg:gap-0"
+                    className={`relative flex-col md:flex-row flex justify-center ${isSingleMayaBranch ? 'lg:justify-end' : 'lg:justify-between'}  items-center md:items-start gap-[30] md:gap-6 lg:gap-0`}
                 >
 
                     {left &&
