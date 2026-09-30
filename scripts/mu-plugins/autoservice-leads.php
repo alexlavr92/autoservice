@@ -65,31 +65,31 @@ function autoservice_leads_register_fields() {
 					'key'             => 'field_as_max_bot_token',
 					'label'           => 'Токен бота Max',
 					'name'            => 'max_bot_token',
-					'type'            => 'password',
+					'type'            => 'text',
 					'instructions'    => 'Токен из настроек чат-бота на platform-api2.max.ru.',
 					'show_in_graphql' => 0,
 				),
 				array(
-					'key'             => 'field_as_max_chat_id',
-					'label'           => 'Max chat_id (группа)',
-					'name'            => 'max_chat_id',
+					'key'             => 'field_as_max_chat_id_1',
+					'label'           => 'Max chat_id Филиал 1, Дорожная',
+					'name'            => 'max_chat_id_1',
 					'type'            => 'text',
-					'instructions'    => 'ID группового чата, куда добавлен бот. Приоритетнее личного чата.',
+					'instructions'    => 'ID чата Max филиала на Дорожной',
 					'show_in_graphql' => 0,
 				),
 				array(
-					'key'             => 'field_as_max_user_id',
-					'label'           => 'Max user_id (личный чат)',
-					'name'            => 'max_user_id',
+					'key'             => 'field_as_max_chat_id_2',
+					'label'           => 'Max chat_id Филиал 2, 1 Мая',
+					'name'            => 'max_chat_id_2',
 					'type'            => 'text',
-					'instructions'    => 'Если группа не нужна — ID человека, который написал боту /start.',
+					'instructions'    => 'ID чата Max филиала на 1 Мая',
 					'show_in_graphql' => 0,
 				),
 				array(
 					'key'             => 'field_as_smartcaptcha_secret',
 					'label'           => 'Секрет SmartCaptcha',
 					'name'            => 'smartcaptcha_secret',
-					'type'            => 'password',
+					'type'            => 'text',
 					'instructions'    => 'Серверный ключ Яндекс SmartCaptcha. Пока пустой — капча не проверяется. Клиентский ключ задаётся во фронте (NEXT_PUBLIC_YANDEX_SMARTCAPTCHA_SITEKEY).',
 					'show_in_graphql' => 0,
 				),
@@ -306,10 +306,10 @@ function autoservice_leads_handle( WP_REST_Request $request ) {
 		$branch_slug = '';
 	}
 
-	$branch_max_url = esc_url_raw( (string) ( $params['branchMaxUrl'] ?? '' ) );
-	if ( '' === $branch_slug ) {
-		$branch_max_url = '';
-	}
+	// $branch_max_url = esc_url_raw( (string) ( $params['branchMaxUrl'] ?? '' ) );
+	// if ( '' === $branch_slug ) {
+	// 	$branch_max_url = '';
+	// }
 
 	$lead = array(
 		'type'         => $type,
@@ -319,7 +319,6 @@ function autoservice_leads_handle( WP_REST_Request $request ) {
 		'timing'       => autoservice_leads_text( $params['timing'] ?? '' ),
 		'branch'       => autoservice_leads_text( $params['branch'] ?? '' ),
 		'branchSlug'   => $branch_slug,
-		'branchMaxUrl' => $branch_max_url,
 		'message'      => sanitize_textarea_field( (string) ( $params['message'] ?? '' ) ),
 		'service'      => autoservice_leads_text( $params['service'] ?? '' ),
 		'extra'        => $extra,
@@ -335,12 +334,14 @@ function autoservice_leads_handle( WP_REST_Request $request ) {
 	}
 
 	$max_token = trim( (string) autoservice_leads_option( 'max_bot_token' ) );
-	$max_chat  = trim( (string) autoservice_leads_option( 'max_chat_id' ) );
-	$max_user  = trim( (string) autoservice_leads_option( 'max_user_id' ) );
+	$branch_chat_ids = array(
+		'dorozhnaya' => trim( (string) autoservice_leads_option( 'max_chat_id_1' ) ),
+		'maya'       => trim( (string) autoservice_leads_option( 'max_chat_id_2' ) ),
+	);
+	$max_chat = isset( $branch_chat_ids[ $branch_slug ] ) ? $branch_chat_ids[ $branch_slug ] : '';
 
-	$mail_enabled     = ! empty( $email_tos );
-	$max_configured   = ( '' !== $max_token && ( '' !== $max_chat || '' !== $max_user ) );
-	$max_for_this_lead = $max_configured && '' !== $branch_slug;
+	$mail_enabled      = ! empty( $email_tos );
+	$max_for_this_lead = '' !== $max_token && '' !== $max_chat;
 
 	if ( ! $mail_enabled && ! $max_for_this_lead ) {
 		return new WP_Error(
@@ -351,7 +352,10 @@ function autoservice_leads_handle( WP_REST_Request $request ) {
 	}
 
 	$email_body = autoservice_leads_format_message( $lead );
-	$max_body   = autoservice_leads_format_max_json( $lead );
+	$max_body   = $email_body;
+	// if ( ! empty( $lead['branchMaxUrl'] ) ) {
+	// 	$max_body .= "\n\nСсылка на филиал в Max: " . $lead['branchMaxUrl'];
+	// }
 	$sent       = false;
 	$errors     = array();
 
@@ -372,7 +376,7 @@ function autoservice_leads_handle( WP_REST_Request $request ) {
 	}
 
 	if ( $max_for_this_lead ) {
-		$max_result = autoservice_leads_send_max( $max_token, $max_chat, $max_user, $max_body );
+		$max_result = autoservice_leads_send_max( $max_token, $max_chat, $max_body );
 		if ( is_wp_error( $max_result ) ) {
 			$errors[] = 'max';
 		} else {
@@ -510,20 +514,21 @@ function autoservice_leads_format_max_json( $lead ) {
 	if ( ! empty( $lead['extra']['partName'] ) ) {
 		$payload['partName'] = $lead['extra']['partName'];
 	}
-	if ( ! empty( $lead['branchMaxUrl'] ) ) {
-		$payload['branchMaxUrl'] = $lead['branchMaxUrl'];
-	}
+	// if ( ! empty( $lead['branchMaxUrl'] ) ) {
+	// 	$payload['branchMaxUrl'] = $lead['branchMaxUrl'];
+	// }
 
 	return wp_json_encode( $payload, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT );
 }
 
-function autoservice_leads_send_max( $token, $chat_id, $user_id, $text ) {
+function autoservice_leads_send_max( $token, $chat_id, $text ) {
 	$query = array();
 	if ( '' !== $chat_id ) {
-		$query['chat_id'] = $chat_id;
-	} else {
-		$query['user_id'] = $user_id;
-	}
+		$query['user_id'] = $chat_id;
+	} 
+	//else {
+	//	$query['user_id'] = $user_id;
+	//}
 
 	$url = add_query_arg( $query, 'https://platform-api2.max.ru/messages' );
 
@@ -538,6 +543,32 @@ function autoservice_leads_send_max( $token, $chat_id, $user_id, $text ) {
 			'body'    => wp_json_encode( array( 'text' => $text ) ),
 		)
 	);
+
+	// $log_file = WP_CONTENT_DIR . '/max-api.log';
+	// $token_length = strlen( $token );
+	// $token_suffix = $token_length > 4 ? substr( $token, -4 ) : '****';
+	// $log_message = sprintf(
+	// 	"[%s] URL: %s\nchat_id: %s\ntoken: [masked], length=%d, ending=%s\n",
+	// 	gmdate( 'c' ),
+	// 	$url,
+	// 	$chat_id,
+	// 	$token_length,
+	// 	$token_suffix
+	// );
+	// if ( is_wp_error( $response ) ) {
+	// 	$log_message .= sprintf(
+	// 		"WP_Error %s: %s\n",
+	// 		$response->get_error_code(),
+	// 		$response->get_error_message(),
+	// 	);
+	// } else {
+	// 	$log_message .= sprintf(
+	// 		"HTTP %d: %s\n",
+	// 		(int) wp_remote_retrieve_response_code( $response ),
+	// 		wp_remote_retrieve_body( $response ),
+	// 	);
+	// }
+	// error_log( $log_message, 3, $log_file );
 
 	if ( is_wp_error( $response ) ) {
 		return $response;
