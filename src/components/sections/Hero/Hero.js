@@ -15,7 +15,7 @@ import WaveTitle from "@/components/ui/WaveTitle";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 export default function Hero({ data }) {
-    const { title, backgroundVideo, slides, stats, cta, brands } = data
+    const { title, backgroundVideo, backgroundVideoPoster, slides, stats, cta, brands } = data
     const ctaRef = useRef(null);
     const isMobile = useMediaQuery('(max-width: 767px)');
 
@@ -23,7 +23,11 @@ export default function Hero({ data }) {
         <section className="relative flex flex-col overflow-hidden bg-black">
             <div className="relative flex lg:min-h-[900] xl:min-h-dvh flex-col">
                 <div className="absolute inset-0">
-                    <Video video={backgroundVideo} className={"inset-0 w-full h-full object-cover"} />
+                    <Video
+                        video={backgroundVideo}
+                        poster={backgroundVideoPoster}
+                        className="inset-0 w-full h-full object-cover"
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/20" />
                 </div>
 

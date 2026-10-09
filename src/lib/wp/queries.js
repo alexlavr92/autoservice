@@ -150,6 +150,7 @@ export const SITE_QUERY = `
         title
         ${CTA}
         backgroundVideo { ${MEDIA_EDGE} }
+        backgroundVideoPoster { ${MEDIA_EDGE} }
         slides { title text }
         stats { value label }
       }

@@ -530,6 +530,7 @@ function mapSection(type, layout, ctx) {
             type: 'hero',
             title: layout.title || '',
             backgroundVideo: mediaString(layout.backgroundVideo),
+            backgroundVideoPoster: mediaString(layout.backgroundVideoPoster),
             slides: (layout.slides || []).map((slide) => ({
                 title: slide.title || '',
                 text: slide.text || '',

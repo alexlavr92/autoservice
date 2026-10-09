@@ -1,4 +1,4 @@
-export function Video({video, className}) {
+export function Video({video, poster, className}) {
     return (
         <video
             autoPlay
@@ -6,6 +6,7 @@ export function Video({video, className}) {
             loop
             playsInline
             suppressHydrationWarning
+            poster={poster}
             className={className}
         >
             <source src={video} type="video/mp4"/>

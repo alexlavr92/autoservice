@@ -204,7 +204,7 @@ Pages (или CPT) со slug `privacy`, `personal-data`. Поля: title, `updat
 
 | GraphQL | Поля | Источник списков |
 |---|---|---|
-| `heroFields` | title, `backgroundVideo`, slides[], stats[], cta | brands — Options `brands` (не дубль в Hero) |
+| `heroFields` | title, `backgroundVideo`, `backgroundVideoPoster`, slides[], stats[], cta | brands — Options `brands` (не дубль в Hero) |
 | `aboutFields` | title, titleBack, subtitle, 3 named groups карточек, aboutStats[], `videoWrapper` | `variant` не свободный ввод — три group |
 | `servicesSectionFields` | title, titleBack, mark | relationship `service`; форма `formQuickFields`; обвязка модалки `serviceModalFields` |
 | `stepsFields` | title, mark, steps[] (title, text), images[] | номер шага считает фронт |
