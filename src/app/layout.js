@@ -37,7 +37,7 @@ export default async function RootLayout({ children }) {
     return (
         <html lang="ru" className={fontVariables} suppressHydrationWarning>
             <body className={'overflow-x-hidden'}>
-                <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+                <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
                     <SiteDataProvider value={data}>
                         <LenisProvider>
                             <NavigationProgress />
