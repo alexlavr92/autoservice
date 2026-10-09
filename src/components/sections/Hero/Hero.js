@@ -1,12 +1,13 @@
 // src/components/sections/hero/Hero.js
-'use client';
+"use client";
 
-import { useRef } from 'react';
-import HeroSlideContent from './HeroSlideContent';
-import HeroStats from './HeroStats';
-import HeroCtaButtons from './HeroCtaButtons';
-import StickyCtaBar from './StickyCtaBar';
-import BrandsMarquee from './BrandsMarquee';
+import { useRef, useState } from "react";
+import Image from "next/image";
+import HeroSlideContent from "./HeroSlideContent";
+import HeroStats from "./HeroStats";
+import HeroCtaButtons from "./HeroCtaButtons";
+import StickyCtaBar from "./StickyCtaBar";
+import BrandsMarquee from "./BrandsMarquee";
 import { Video } from "@/components/ui/Video";
 import { Container } from "@/components/Container";
 import ThemeToggle from "@/components/ui/ThemeToggle";
@@ -15,60 +16,89 @@ import WaveTitle from "@/components/ui/WaveTitle";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 export default function Hero({ data }) {
-    const { title, backgroundVideo, backgroundVideoPoster, slides, stats, cta, brands } = data
-    const ctaRef = useRef(null);
-    const isMobile = useMediaQuery('(max-width: 767px)');
+  const {
+    title,
+    backgroundVideo,
+    backgroundVideoPoster,
+    slides,
+    stats,
+    cta,
+    brands,
+  } = data;
+  const ctaRef = useRef(null);
+  const [failedVideo, setFailedVideo] = useState(null);
+  const isMobile = useMediaQuery("(max-width: 767px)");
+  const showVideoPoster = Boolean(
+    backgroundVideo && backgroundVideoPoster && failedVideo === backgroundVideo,
+  );
 
-    return (
-        <section className="relative flex flex-col overflow-hidden bg-black">
-            <div className="relative flex lg:min-h-[900] xl:min-h-dvh flex-col">
-                <div className="absolute inset-0">
-                    <Video
-                        video={backgroundVideo}
-                        poster={backgroundVideoPoster}
-                        className="inset-0 w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/20" />
-                </div>
+  return (
+    <section className="relative flex flex-col overflow-hidden bg-black">
+      <div className="relative flex lg:min-h-[900] xl:min-h-dvh flex-col">
+        <div className="absolute inset-0">
+          <Video
+            video={backgroundVideo}
+            onError={() => setFailedVideo(backgroundVideo)}
+            onCanPlay={() => setFailedVideo(null)}
+            className="inset-0 w-full h-full object-cover"
+          />
+          {showVideoPoster && (
+            <Image
+              src={backgroundVideoPoster}
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover"
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/20" />
+        </div>
 
-                <Container className="relative z-10 flex min-h-0 flex-1 flex-col justify-start lg:justify-center gap-5 lg:gap-20 xl:gap-32 pb-14 md:pb-0 pt-30 md:pt-40 lg:pt-35">
-                    <WaveTitle as="h1" className="relative font-heading font-bold text-foreground-fixed text-[25px] md:text-[clamp(24px,4.2vh,44px)] lg:text-[clamp(28px,6vh,72px)] whitespace-pre-line md:max-w-[80%] lg:max-w-[60%] xl:max-w-[50%]">
-                        {title}
-                    </WaveTitle>
+        <Container className="relative z-10 flex min-h-0 flex-1 flex-col justify-start lg:justify-center gap-5 lg:gap-20 xl:gap-32 pb-14 md:pb-0 pt-30 md:pt-40 lg:pt-35">
+          <WaveTitle
+            as="h1"
+            className="relative font-heading font-bold text-foreground-fixed text-[25px] md:text-[clamp(24px,4.2vh,44px)] lg:text-[clamp(28px,6vh,72px)] whitespace-pre-line md:max-w-[80%] lg:max-w-[60%] xl:max-w-[50%]"
+          >
+            {title}
+          </WaveTitle>
 
-                    <div className="relative z-10 min-h-0 gap-23 md:gap-[clamp(16px,4vh,65px)] lg:gap-unset flex flex-col-reverse items-start md:items-end lg:items-start justify-between md:mt-[clamp(14px,2.4vh,28px)] lg:min-h-[230] lg:mt-0 lg:flex-row">
-                        <Slider
-                            count={slides.length}
-                            arrowsPlacement="stack"
-                            swipeable={isMobile}
-                            showArrows={!isMobile}
-                            className="w-[calc(100%+30px)] md:w-full -mx-3.75 px-3.75 md:px-0 md:mx-0 max-w-none lg:w-lg"
-                        >
-                            {({ index, direction }) => (
-                                <HeroSlideContent
-                                    slide={slides[index]}
-                                    activeIndex={index}
-                                    direction={direction}
-                                />
-                            )}
-                        </Slider>
+          <div className="relative z-10 min-h-0 gap-23 md:gap-[clamp(16px,4vh,65px)] lg:gap-unset flex flex-col-reverse items-start md:items-end lg:items-start justify-between md:mt-[clamp(14px,2.4vh,28px)] lg:min-h-[230] lg:mt-0 lg:flex-row">
+            <Slider
+              count={slides.length}
+              arrowsPlacement="stack"
+              swipeable={isMobile}
+              showArrows={!isMobile}
+              className="w-[calc(100%+30px)] md:w-full -mx-3.75 px-3.75 md:px-0 md:mx-0 max-w-none lg:w-lg"
+            >
+              {({ index, direction }) => (
+                <HeroSlideContent
+                  slide={slides[index]}
+                  activeIndex={index}
+                  direction={direction}
+                />
+              )}
+            </Slider>
 
-                        <HeroStats stats={stats} />
-                    </div>
+            <HeroStats stats={stats} />
+          </div>
 
-                    <div className="md:relative lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:w-full lg:bottom-0 z-10 flex items-center gap-1 md:gap-4 md:pt-[clamp(12px,3vh,32px)] md:pb-[clamp(16px,3.7vh,40px)] justify-center">
-                        <HeroCtaButtons ref={ctaRef} label={cta.label} />
-                        <div className={'absolute bottom-4 right-4 md:right-0 lg:right-10 xl:right-20 xl:right-0 md:top-[clamp(0px,3vh,22px)] z-10 w-[50] h-[50] md:w-[70] md:h-[70]'}>
-                            <ThemeToggle />
-                        </div>
-                    </div>
-                    <StickyCtaBar sentinelRef={ctaRef} label={cta.label} />
-                </Container>
+          <div className="md:relative lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:w-full lg:bottom-0 z-10 flex items-center gap-1 md:gap-4 md:pt-[clamp(12px,3vh,32px)] md:pb-[clamp(16px,3.7vh,40px)] justify-center">
+            <HeroCtaButtons ref={ctaRef} label={cta.label} />
+            <div
+              className={
+                "absolute bottom-4 right-4 md:right-0 lg:right-10 xl:right-20 xl:right-0 md:top-[clamp(0px,3vh,22px)] z-10 w-[50] h-[50] md:w-[70] md:h-[70]"
+              }
+            >
+              <ThemeToggle />
             </div>
+          </div>
+          <StickyCtaBar sentinelRef={ctaRef} label={cta.label} />
+        </Container>
+      </div>
 
-            <div className="relative z-10 py-[60] md:py-[50] lg:py-[60] bg-background-secondary">
-                <BrandsMarquee brands={brands} />
-            </div>
-        </section>
-    );
+      <div className="relative z-10 py-[60] md:py-[50] lg:py-[60] bg-background-secondary">
+        <BrandsMarquee brands={brands} />
+      </div>
+    </section>
+  );
 }
