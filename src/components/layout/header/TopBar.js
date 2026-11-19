@@ -31,7 +31,7 @@ export default function TopBar({ logo }) {
       )}
 
       <Link
-        className={"absolute left-1/2 transform -translate-x-1/2 top-[20]"}
+        className={"absolute left-1/2 transform -translate-x-1/2 top-[15]"}
         href="/"
       >
         <Image
